@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <sys/time.h> /* for gettimeofday system call */
 #include "lab.h"
+#include <stdio.h>
+
+//threading
+#include <pthread.h>
+
 /**
  * @brief Standard insertion sort that is faster than merge sort for small array's
  *
@@ -101,6 +106,59 @@ void merge_s(int A[], int p, int q, int r)
 
   free(B);
 }
+
+
+
+void mergesort_mt(int *A, int n, int num_thread)
+ {
+    //num_thread = min(num_thread, MAX_THREADS
+    if (num_thread > MAX_THREADS)
+    {
+      num_thread = MAX_THREADS;
+    }
+    //
+    int chunk_size = 1 + ((n - 1) / num_thread);
+
+
+    int beginning = 0;
+    int ending = chunk_size - 1;
+
+    // sort the chunks
+    while (beginning < n)
+    {
+      mergesort_s(A, beginning, ending);
+      beginning = ending + 1;
+      ending = ending + chunk_size;
+
+      //ending cannot be bigger then n
+      if (ending >= n)
+      {
+        ending = n - 1;
+      }
+    }
+
+    //join threads
+
+    
+
+    //now merge it
+    beginning = 0;
+    ending = chunk_size - 1;
+    while (beginning < n)
+    {
+      merge_s(A, beginning, ending, ending + chunk_size);
+      beginning = ending + chunk_size + 1;
+      ending = ending + chunk_size + chunk_size;
+      if (ending >= n)
+      {
+        ending = n - 1;
+      }
+    }
+
+
+    //FREE MEMORY
+  
+ }
 
 double getMilliSeconds()
 {
