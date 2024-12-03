@@ -134,7 +134,7 @@ void test_oom(void)
 
 void test_print(void)
 {
-    fprintf(stderr, "->Test allocating and freeing 1 byte\n");
+    fprintf(stderr, "->Test print function\n");
     struct buddy_pool pool;
     int kval = MIN_K;
     size_t size = UINT64_C(1) << kval;
@@ -154,7 +154,7 @@ void test_print(void)
 
 void test_buddy_realloc(void)
 {
-    fprintf(stderr, "->Test allocating and freeing 1 byte\n");
+    fprintf(stderr, "->Test realloc function\n");
     struct buddy_pool pool;
     int kval = MIN_K;
     size_t size = UINT64_C(1) << kval;
